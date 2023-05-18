@@ -1,0 +1,60 @@
+/* Note.module.css */
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.container_note {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2em;
+}
+
+.note {
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: transparent;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  flex: 1; /* Já estava presente */
+}
+
+.note h2 {
+  margin-bottom: 10px;
+}
+
+.note p {
+  margin-bottom: 20px;
+}
+
+.note a {
+  width: 60%;
+  background-color: transparent;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  padding: 0.5em;
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.note a:hover {
+  color: #222;
+  background-color: #fff;
+}
+
+.button_section {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

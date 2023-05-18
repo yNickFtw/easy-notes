@@ -1,0 +1,65 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+form {
+  width: 100%;
+  max-width: 600px;
+}
+
+.form_control {
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.form_control h3 {
+  color: #fff;
+}
+
+.form_control input {
+  background-color: transparent;
+  width: 100%;
+  padding: 1em;
+  border: 2px solid #494949;
+  color: #fff;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.form_control input:focus {
+  outline: none;
+  border: 2px solid #707070;
+}
+
+textarea[name="note"] {
+  width: 100%;
+  height: 300px;
+  padding: 0.5rem;
+  border: 2px solid #494949;
+  border-radius: 4px;
+  background-color: transparent;
+  color: white;
+  transition: 0.3s;
+}
+
+textarea:focus {
+  outline: none;
+  border: 2px solid #707070;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #80bd82;
+}
