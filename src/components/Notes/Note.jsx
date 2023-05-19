@@ -8,7 +8,7 @@ const api = "https://easy-notes-api-ten.vercel.app";
 
 export const Note = () => {
   const [notes, setNotes] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Nova variável de estado
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -21,7 +21,7 @@ export const Note = () => {
       })
       .then((response) => {
         setNotes(response.data);
-        setIsLoading(false); // Definir isLoading para false após obter os dados
+        setIsLoading(false);
         console.log(response.data);
       })
       .catch((err) => {
@@ -31,6 +31,15 @@ export const Note = () => {
 
   function handleSave(id) {
     const token = localStorage.getItem("token");
+    const updatedNotes = [...notes];
+    const noteIndex = updatedNotes.findIndex((note) => note.id === id);
+
+    // Atualizar apenas a propriedade isButtonLoading usando o setNotes
+    setNotes((prevNotes) => {
+      const newNotes = [...prevNotes];
+      newNotes[noteIndex] = { ...newNotes[noteIndex], isButtonLoading: true };
+      return newNotes;
+    });
 
     axios
       .put(`${api}/notes/save/${id}`, null, {
@@ -41,25 +50,43 @@ export const Note = () => {
       .then((response) => {
         if (response) {
           toast.success(response.data.message);
+          setNotes((prevNotes) => {
+            const newNotes = [...prevNotes];
+            newNotes[noteIndex] = {
+              ...newNotes[noteIndex],
+              isButtonLoading: false,
+              isSaved: true,
+            };
+            return newNotes;
+          });
         }
       })
       .catch((err) => {
-        toast.success(err.response.data.message);
-        const updatedNotes = notes.map((note) => {
-          if (note.id === id) {
-            return { ...note, isSaved: true };
-          }
-          return note;
+        toast.error(err.response.data.message);
+        setNotes((prevNotes) => {
+          const newNotes = [...prevNotes];
+          newNotes[noteIndex] = {
+            ...newNotes[noteIndex],
+            isButtonLoading: false,
+            isSaved: false,
+          };
+          return newNotes;
         });
-
-        setNotes(updatedNotes);
-
         console.log(err);
       });
   }
 
   function handleUnsave(id) {
     const token = localStorage.getItem("token");
+    const updatedNotes = [...notes];
+    const noteIndex = updatedNotes.findIndex((note) => note.id === id);
+
+    // Atualizar apenas a propriedade isButtonLoading usando o setNotes
+    setNotes((prevNotes) => {
+      const newNotes = [...prevNotes];
+      newNotes[noteIndex] = { ...newNotes[noteIndex], isButtonLoading: true };
+      return newNotes;
+    });
 
     axios
       .put(`${api}/notes/unsave/${id}`, null, {
@@ -69,20 +96,29 @@ export const Note = () => {
       })
       .then((response) => {
         if (response) {
-          const updatedNotes = notes.map((note) => {
-            if (note.id === id) {
-              return { ...note, isSaved: false };
-            }
-            return note;
-          });
-
-          setNotes(updatedNotes);
-
           toast.success(response.data.message);
+          setNotes((prevNotes) => {
+            const newNotes = [...prevNotes];
+            newNotes[noteIndex] = {
+              ...newNotes[noteIndex],
+              isButtonLoading: false,
+              isSaved: false,
+            };
+            return newNotes;
+          });
         }
       })
       .catch((err) => {
         toast.error(err.response.data.message);
+        setNotes((prevNotes) => {
+          const newNotes = [...prevNotes];
+          newNotes[noteIndex] = {
+            ...newNotes[noteIndex],
+            isButtonLoading: false,
+            isSaved: true,
+          };
+          return newNotes;
+        });
         console.log(err);
       });
   }
@@ -108,8 +144,13 @@ export const Note = () => {
                 onClick={() =>
                   note.isSaved ? handleUnsave(note.id) : handleSave(note.id)
                 }
+                disabled={note.isButtonLoading}
               >
-                {note.isSaved ? "Desfazer" : "Salvar"}
+                {note.isButtonLoading
+                  ? "Aguarde..."
+                  : note.isSaved
+                  ? "Desfazer"
+                  : "Salvar"}
               </button>
             </div>
           </div>
