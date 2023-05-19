@@ -3,21 +3,29 @@
 
 /* Cor do editor */
 .ql-editor {
-  background-color: #ccc;
+  background-color: #222;
 }
 
 /* Cor do texto */
 .ql-editor .ql-blank::before,
 .ql-editor p {
-  color: #222;
+  color: #fff;
+}
+
+.ql-editor h1, .ql-editor h2, .ql-edior h3 {
+  color: #fff
+}
+
+.ql-editor ol {
+  color: #fff;
 }
 
 /* Cor dos botões da barra de ferramentas */
 .ql-toolbar button {
-  color: #222;
+  color: #fff;
 }
 
 /* Cor dos ícones da barra de ferramentas */
 .ql-toolbar svg {
-  fill: #222;
+  fill: #fff;
 }
