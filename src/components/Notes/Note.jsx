@@ -4,7 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const api = ":8080";
+const api = "https://easy-notes-api-ten.vercel.app";
 
 export const Note = () => {
   const [notes, setNotes] = useState([]);

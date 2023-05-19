@@ -31,7 +31,7 @@ export const CreateNote = () => {
     const token = localStorage.getItem("token");
 
     axios
-      .post(api + "/notes/", data, {
+      .post(`${api}/notes/`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
