@@ -31,6 +31,15 @@ export const SavedNote = () => {
 
   function handleSave(id) {
     const token = localStorage.getItem("token");
+    const updatedNotes = [...notes];
+    const noteIndex = updatedNotes.findIndex((note) => note.id === id);
+
+    // Atualizar apenas a propriedade isButtonLoading usando o setNotes
+    setNotes((prevNotes) => {
+      const newNotes = [...prevNotes];
+      newNotes[noteIndex] = { ...newNotes[noteIndex], isButtonLoading: true };
+      return newNotes;
+    });
 
     axios
       .put(`${api}/notes/save/${id}`, null, {
@@ -41,25 +50,43 @@ export const SavedNote = () => {
       .then((response) => {
         if (response) {
           toast.success(response.data.message);
+          setNotes((prevNotes) => {
+            const newNotes = [...prevNotes];
+            newNotes[noteIndex] = {
+              ...newNotes[noteIndex],
+              isButtonLoading: false,
+              isSaved: true,
+            };
+            return newNotes;
+          });
         }
       })
       .catch((err) => {
-        toast.success(err.response.data.message);
-        const updatedNotes = notes.map((note) => {
-          if (note.id === id) {
-            return { ...note, isSaved: true };
-          }
-          return note;
+        toast.error(err.response.data.message);
+        setNotes((prevNotes) => {
+          const newNotes = [...prevNotes];
+          newNotes[noteIndex] = {
+            ...newNotes[noteIndex],
+            isButtonLoading: false,
+            isSaved: false,
+          };
+          return newNotes;
         });
-
-        setNotes(updatedNotes);
-
         console.log(err);
       });
   }
 
   function handleUnsave(id) {
     const token = localStorage.getItem("token");
+    const updatedNotes = [...notes];
+    const noteIndex = updatedNotes.findIndex((note) => note.id === id);
+
+    // Atualizar apenas a propriedade isButtonLoading usando o setNotes
+    setNotes((prevNotes) => {
+      const newNotes = [...prevNotes];
+      newNotes[noteIndex] = { ...newNotes[noteIndex], isButtonLoading: true };
+      return newNotes;
+    });
 
     axios
       .put(`${api}/notes/unsave/${id}`, null, {
@@ -69,24 +96,57 @@ export const SavedNote = () => {
       })
       .then((response) => {
         if (response) {
-          const updatedNotes = notes.map((note) => {
-            if (note.id === id) {
-              return { ...note, isSaved: false };
-            }
-            return note;
-          });
-
-          setNotes(updatedNotes);
-
           toast.success(response.data.message);
+          setNotes((prevNotes) => {
+            const newNotes = [...prevNotes];
+            newNotes[noteIndex] = {
+              ...newNotes[noteIndex],
+              isButtonLoading: false,
+              isSaved: false,
+            };
+            return newNotes;
+          });
         }
       })
       .catch((err) => {
         toast.error(err.response.data.message);
+        setNotes((prevNotes) => {
+          const newNotes = [...prevNotes];
+          newNotes[noteIndex] = {
+            ...newNotes[noteIndex],
+            isButtonLoading: false,
+            isSaved: true,
+          };
+          return newNotes;
+        });
         console.log(err);
       });
   }
 
+  function deleteNote(id) {
+    const token = localStorage.getItem("token");
+  
+    try {
+      axios
+        .delete(`${api}/notes/saves/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          if (response) {
+            toast.success(response.data.message);
+            setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
+          }
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
   return (
     <div className={styles.container}>
       {isLoading && <h4 style={{ color: "#fff" }}>Carregando...</h4>}
@@ -104,12 +164,19 @@ export const SavedNote = () => {
             )}
             <div className={styles.button_section}>
               <Link to={`/note/${note.id}`}>Ver Mais</Link>
-              {note.isSaved && (
-                <button onClick={() => handleUnsave(note.id)}>Desfazer</button>
-              )}
-              {!note.isSaved && (
-                <button onClick={() => handleSave(note.id)}>Salvar</button>
-              )}
+              <button className={styles.delete_btn} onClick={() => deleteNote(note.id)}>Excluir</button>
+              <button
+                onClick={() =>
+                  note.isSaved ? handleUnsave(note.id) : handleSave(note.id)
+                }
+                disabled={note.isButtonLoading}
+              >
+                {note.isButtonLoading
+                  ? "Aguarde..."
+                  : note.isSaved
+                  ? "Desfazer"
+                  : "Salvar"}
+              </button>
             </div>
           </div>
         ))}

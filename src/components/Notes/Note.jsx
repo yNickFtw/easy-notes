@@ -123,6 +123,30 @@ export const Note = () => {
       });
   }
 
+  function deleteNote(id) {
+    const token = localStorage.getItem("token");
+  
+    try {
+      axios
+        .delete(`${api}/notes/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          if (response) {
+            toast.success(response.data.message);
+            setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
+          }
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }  
+
   return (
     <div className={styles.container}>
       {isLoading && <h4 style={{ color: "#fff" }}>Carregando...</h4>}
@@ -140,6 +164,7 @@ export const Note = () => {
             )}
             <div className={styles.button_section}>
               <Link to={`/note/${note.id}`}>Ver Mais</Link>
+              <button className={styles.delete_btn} onClick={() => deleteNote(note.id)}>Excluir</button>
               <button
                 onClick={() =>
                   note.isSaved ? handleUnsave(note.id) : handleSave(note.id)
