@@ -127,3 +127,25 @@ button:hover {
   border-width: 0 3px 3px 0;
   transform: rotate(45deg);
 }
+
+.profile_section {
+  max-width: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.image_section {
+  display: flex;
+  align-items: center;
+}
+
+.info_note h2 {
+  font-size: 2em;
+}
+
+.info_note h3 {
+  font-size: 1.5em;
+  color: #ccc;
+  font-weight: 100;
+}

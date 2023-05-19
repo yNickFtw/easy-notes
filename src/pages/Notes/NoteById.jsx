@@ -4,6 +4,7 @@ import styles from "./CreateNote.module.css";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { Navbar } from "../../components/Navbar/Navbar";
+import { IconUserCircle } from '@tabler/icons-react';
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./quill-custom.css";
@@ -18,6 +19,7 @@ export const NoteById = () => {
   const [isPublic, setIsPublic] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true)
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -46,7 +48,10 @@ export const NoteById = () => {
         .catch((err) => {
           console.log(err);
           setError(true);
-        });
+        })
+        .finally(() => {
+          setLoading(false)
+        })
     }
   }, [id]);
 
@@ -107,6 +112,9 @@ export const NoteById = () => {
     <>
       <Navbar />
       <div className={styles.container}>
+        {loading && (
+          <p style={{ color: "#fff" }}>Carregando...</p>
+        )}
         {error && (
           <h2 style={{ color: "#fff" }}>
             Você não pode acessar esta nota ou ela não existe.
@@ -115,7 +123,7 @@ export const NoteById = () => {
         {!error && note.userId === userId && (
           <form onSubmit={handleSubmit}>
             <div className={styles.form_control}>
-              <h3>Título da nota:</h3>*
+              <h3>Título da nota:</h3>
               <input
                 type="text"
                 placeholder="Digite o título da nota:"
@@ -175,8 +183,16 @@ export const NoteById = () => {
         <div className={styles.container_html}>
           {note.isPublic && note.userId !== userId && (
             <>
-              <h2>{note.title}</h2>
-              <h3>{note.description}</h3>
+            <div className={styles.profile_section}>
+              <div className={styles.image_section}>
+              <IconUserCircle />
+              </div>
+              <h3>por {note.user.name}</h3>
+            </div>
+            <div className={styles.info_note}>
+              <h2 className={styles.title_note}>{note.title}</h2>
+              <h3 className={styles.description_note}>{note.description}</h3>
+              </div>
               <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
             </>
           )}
