@@ -63,3 +63,8 @@ button {
 button:hover {
   background-color: #80bd82;
 }
+
+.container_html {
+  max-width: 600px;
+  color: #fff;
+}

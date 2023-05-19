@@ -66,3 +66,16 @@
 .delete_btn:hover {
   background-color: #520505;
 }
+
+.delete_btn_cancel, .delete_btn_confirm {
+  margin-top: .3em;
+  margin-left: 2.5em;
+}
+
+.delete_btn_confirm {
+  background-color: #960606;
+}
+
+.delete_btn_confirm:hover {
+  background-color: #520505;
+}

@@ -9,6 +9,7 @@ const api = "https://easy-notes-api-ten.vercel.app";
 export const Note = () => {
   const [notes, setNotes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [confirmDeleteNoteId, setConfirmDeleteNoteId] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -123,9 +124,17 @@ export const Note = () => {
       });
   }
 
+  function confirmDelete(id) {
+    setConfirmDeleteNoteId(id);
+  }
+
+  function cancelDelete() {
+    setConfirmDeleteNoteId(null);
+  }
+
   function deleteNote(id) {
     const token = localStorage.getItem("token");
-  
+
     try {
       axios
         .delete(`${api}/notes/${id}`, {
@@ -137,6 +146,7 @@ export const Note = () => {
           if (response) {
             toast.success(response.data.message);
             setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
+            setConfirmDeleteNoteId(null);
           }
         })
         .catch((err) => {
@@ -145,7 +155,7 @@ export const Note = () => {
     } catch (error) {
       console.log(error);
     }
-  }  
+  }
 
   return (
     <div className={styles.container}>
@@ -164,7 +174,29 @@ export const Note = () => {
             )}
             <div className={styles.button_section}>
               <Link to={`/note/${note.id}`}>Ver Mais</Link>
-              <button className={styles.delete_btn} onClick={() => deleteNote(note.id)}>Excluir</button>
+              {confirmDeleteNoteId === note.id ? (
+                <div>
+                  <button
+                    className={styles.delete_btn_confirm}
+                    onClick={() => deleteNote(note.id)}
+                  >
+                    Confirmar
+                  </button>
+                  <button
+                    className={styles.delete_btn_cancel}
+                    onClick={cancelDelete}
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              ) : (
+                <button
+                  className={styles.delete_btn}
+                  onClick={() => confirmDelete(note.id)}
+                >
+                  Excluir
+                </button>
+              )}
               <button
                 onClick={() =>
                   note.isSaved ? handleUnsave(note.id) : handleSave(note.id)
