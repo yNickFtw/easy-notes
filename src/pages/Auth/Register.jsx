@@ -12,11 +12,13 @@ export const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsSaving(true);
 
     const data = {
       name,
@@ -42,7 +44,10 @@ export const Register = () => {
       .catch((err) => {
         toast.error(err.response.data.message);
         console.log(err.response.data.message);
-      });
+      })
+      .finally(() => {
+        setIsSaving(false)
+      })
   };
 
   return (
@@ -96,7 +101,7 @@ export const Register = () => {
             />
           </div>
           <button type="submit" className={styles.btn_auth}>
-            Cadastrar-se <IconLogin />
+          {isSaving ? "Aguarde..." : "Cadastrar-se"}
           </button>
           <p>
             Já tem uma conta? <Link to="/login">Clique aqui</Link>

@@ -6,9 +6,12 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuth } from "../../contexts/UserContext";
 
+const api = "https://easy-notes-api-ten.vercel.app";
+
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
   const { login } = useAuth();
 
@@ -16,6 +19,7 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSaving(true);
 
     const data = {
       email,
@@ -23,7 +27,7 @@ export const Login = () => {
     };
 
     axios
-      .post("http://localhost:8080/users/authenticate", data)
+      .post(api + "/users/authenticate", data)
       .then((response) => {
         if (response) {
           toast.success(response.data.message);
@@ -37,6 +41,9 @@ export const Login = () => {
       .catch((err) => {
         toast.error(err.response.data.message);
         console.log(err.response.data);
+      })
+      .finally(() => {
+        setIsSaving(false);
       });
   };
 
@@ -72,7 +79,7 @@ export const Login = () => {
             />
           </div>
           <button type="submit" className={styles.btn_auth}>
-            Entrar <IconLogin />
+            {isSaving ? "Aguarde..." : "Entrar"}
           </button>
           <p>
             Ainda não tem uma conta? <Link to="/register">Clique aqui</Link>

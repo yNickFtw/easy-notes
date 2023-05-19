@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { Navbar } from "../../components/Navbar/Navbar";
 import "./quill-custom.css"; // Importe o arquivo CSS personalizado
 
+const api = "https://easy-notes-api-ten.vercel.app"
 
 export const CreateNote = () => {
   const [title, setTitle] = useState("");
@@ -30,7 +31,7 @@ export const CreateNote = () => {
     const token = localStorage.getItem("token");
 
     axios
-      .post("http://localhost:8080/notes/", data, {
+      .post(api + "/notes/", data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
