@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
-import styles from "./Note.module.css";
+import styles from "../Notes/Note.module.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const api = ":8080";
+const api = "https://easy-notes-api-ten.vercel.app";
 
-export const Note = () => {
+export const SavedNote = () => {
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
 
     axios
-      .get(`${api}/notes/`, {
+      .get(`${api}/notes/saves`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -74,7 +74,7 @@ export const Note = () => {
     <div className={styles.container}>
       {!notes && <h4 style={{ color: "#fff" }}>Carregando...</h4>}
       {notes.length == 0 && (
-        <h4 style={{ color: "#fff" }}>Você não tem notas criadas.</h4>
+        <h4 style={{ color: "#fff" }}>Você não tem notas salvas.</h4>
       )}
       <div className={styles.container_note}>
         {notes.map((note) => (

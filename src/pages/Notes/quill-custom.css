@@ -1,0 +1,23 @@
+/* Estilos personalizados para o ReactQuill */
+/* Substitua #ff0000 pelo código de cor desejado */
+
+/* Cor do editor */
+.ql-editor {
+  background-color: #ccc;
+}
+
+/* Cor do texto */
+.ql-editor .ql-blank::before,
+.ql-editor p {
+  color: #222;
+}
+
+/* Cor dos botões da barra de ferramentas */
+.ql-toolbar button {
+  color: #222;
+}
+
+/* Cor dos ícones da barra de ferramentas */
+.ql-toolbar svg {
+  fill: #222;
+}

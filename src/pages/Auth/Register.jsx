@@ -5,6 +5,8 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
+const api = "https://easy-notes-api-ten.vercel.app"
+
 export const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -29,7 +31,7 @@ export const Register = () => {
     }
 
     axios
-      .post("http://localhost:8080/users/register", data)
+      .post(api + "/users/register", data)
       .then((response) => {
         if (response) {
           toast.success(response.data.message);

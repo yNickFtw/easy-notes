@@ -1,14 +1,18 @@
 import { useState } from "react";
 import axios from "axios";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import styles from "./CreateNote.module.css";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../../components/Navbar/Navbar";
+import "./quill-custom.css"; // Importe o arquivo CSS personalizado
+
 
 export const CreateNote = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [note, setNote] = useState("");
+  const [content, setContent] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
   const navigate = useNavigate();
@@ -20,7 +24,7 @@ export const CreateNote = () => {
     const data = {
       title,
       description,
-      note,
+      content,
     };
 
     const token = localStorage.getItem("token");
@@ -75,11 +79,19 @@ export const CreateNote = () => {
           </div>
           <div className={styles.form_control}>
             <h3>Nota:</h3>
-            <textarea
-              name="note"
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-            ></textarea>
+            <ReactQuill
+              value={content}
+              onChange={setContent}
+              modules={{
+                toolbar: [
+                  [{ header: [1, 2, 3, false] }],
+                  ["bold", "italic", "underline", "strike"],
+                  [{ list: "ordered" }, { list: "bullet" }],
+                  ["link"],
+                  ["clean"],
+                ],
+              }}
+            />
           </div>
           <button type="submit" disabled={isSaving}>
             {isSaving ? "Aguarde..." : "Salvar"}

@@ -38,13 +38,8 @@ export const Navbar = () => {
           </Link>
         </li>
         <li>
-          <Link to="/saved/notes">
+          <Link to="/notes/saves">
             <IconBookmark /> Salvos
-          </Link>
-        </li>
-        <li>
-          <Link to="/profile">
-            <IconUser /> Perfil
           </Link>
         </li>
         <li>
