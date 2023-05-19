@@ -92,7 +92,11 @@ export const NoteById = () => {
     <>
       <Navbar />
       <div className={styles.container}>
-        <form onSubmit={handleSubmit}>
+        {!note && (
+          <h2 style={{color: '#fff'}}>Você não pode acessar esta nota ou ela não existe.</h2>
+        )}
+        {note && (
+          <form onSubmit={handleSubmit}>
           <div className={styles.form_control}>
             <h3>Título da nota:</h3>
             <input
@@ -135,6 +139,7 @@ export const NoteById = () => {
             {isSaving ? "Aguarde..." : "Salvar"}
           </button>{" "}
         </form>
+        )}
       </div>
     </>
   );
