@@ -6,22 +6,23 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Navbar } from "../../components/Navbar/Navbar";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import './quill-custom.css';
+import "./quill-custom.css";
 
 const api = "https://easy-notes-api-ten.vercel.app";
 
 export const NoteById = () => {
   const [note, setNote] = useState({});
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [content, setContent] = useState("");
+  const [isPublic, setIsPublic] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const userId = parseInt(localStorage.getItem("userId"))
+  const userId = parseInt(localStorage.getItem("userId"));
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -36,8 +37,8 @@ export const NoteById = () => {
         .then((response) => {
           if (response.status === 200) {
             setNote(response.data);
-            console.log(userId)
-            console.log(response.data)
+            console.log(userId);
+            console.log(response.data);
           } else if (response.status === 400) {
             setError(true);
           }
@@ -59,6 +60,9 @@ export const NoteById = () => {
     if (note.content) {
       setContent(note.content);
     }
+    if (note.isPublic !== undefined) {
+      setIsPublic(note.isPublic);
+    }
   }, [note]);
 
   const handleSubmit = async (e) => {
@@ -71,6 +75,7 @@ export const NoteById = () => {
       title,
       description,
       content,
+      isPublic,
     };
 
     try {
@@ -147,19 +152,34 @@ export const NoteById = () => {
                 }}
               />
             </div>
+            <div
+              className={`${styles.form_control} ${styles.form_control_checkbox}`}
+            >
+              <p>Você quer que essa nota seja pública?</p>
+              <label className={styles.checkbox_label}>
+                <input
+                  type="checkbox"
+                  name="isPublic"
+                  checked={isPublic}
+                  onChange={(e) => setIsPublic(e.target.checked)}
+                  className={styles.checkbox}
+                />
+                <span className={styles.checkbox_custom}></span>
+              </label>
+            </div>
             <button type="submit" disabled={isSaving}>
               {isSaving ? "Aguarde..." : "Salvar"}
             </button>{" "}
           </form>
         )}
         <div className={styles.container_html}>
-        {note.isPublic && note.userId !== userId && (
-          <>
-          <h2>{note.title}</h2>
-          <h3>{note.description}</h3>
-          <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
-          </>
-        )}
+          {note.isPublic && note.userId !== userId && (
+            <>
+              <h2>{note.title}</h2>
+              <h3>{note.description}</h3>
+              <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
+            </>
+          )}
         </div>
       </div>
     </>

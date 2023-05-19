@@ -8,13 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { Navbar } from "../../components/Navbar/Navbar";
 import "./quill-custom.css"; // Importe o arquivo CSS personalizado
 
-const api = "https://easy-notes-api-ten.vercel.app"
+const api = "https://easy-notes-api-ten.vercel.app";
 
 export const CreateNote = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+  const [isPublic, setIsPublic] = useState(false);
 
   const navigate = useNavigate();
 
@@ -26,7 +27,8 @@ export const CreateNote = () => {
       title,
       description,
       content,
-    };
+      isPublic,
+    };    
 
     const token = localStorage.getItem("token");
 
@@ -93,6 +95,21 @@ export const CreateNote = () => {
                 ],
               }}
             />
+          </div>
+          <div
+            className={`${styles.form_control} ${styles.form_control_checkbox}`}
+          >
+            <p>Você quer que essa nota seja pública?</p>
+            <label className={styles.checkbox_label}>
+              <input
+                type="checkbox"
+                name="isPublic"
+                checked={isPublic}
+                onChange={(e) => setIsPublic(e.target.checked)}
+                className={styles.checkbox}
+              />
+              <span className={styles.checkbox_custom}></span>
+            </label>
           </div>
           <button type="submit" disabled={isSaving}>
             {isSaving ? "Aguarde..." : "Salvar"}

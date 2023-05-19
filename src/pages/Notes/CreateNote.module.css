@@ -68,3 +68,62 @@ button:hover {
   max-width: 600px;
   color: #fff;
 }
+
+.form_control_checkbox {
+  max-width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #ccc;
+}
+
+.checkbox_label {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  padding-left: 25px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.checkbox_label input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkbox_custom {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #fff;
+  border: 2px solid #aaa;
+  border-radius: 3px;
+}
+
+.checkbox_label input[type="checkbox"]:checked ~ .checkbox_custom {
+  background-color: #2196f3;
+}
+
+.checkbox_custom::after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox_label input[type="checkbox"]:checked ~ .checkbox_custom::after {
+  display: block;
+}
+
+.checkbox_label .checkbox_custom::after {
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
