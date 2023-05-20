@@ -1,0 +1,49 @@
+.container {
+  padding-left: 300px;
+  color: #fff;
+}
+
+.container_profile {
+  margin-top: 5em;
+  max-width: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile_name {
+  width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.note {
+  margin: 1em auto;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  border: 3px solid #ccc;
+  border-radius: 10px;
+  padding: 1em;
+}
+
+.note a {
+  text-decoration: none;
+  color: #fff;
+  max-width: 100%;
+  text-align: center;
+  border: 2px solid #fff;
+  padding: .8em;
+  transition: all ease .3s;
+}
+
+.note a:hover {
+  transform: scale(1.04);
+  background: #fff;
+  color: #000;
+}
+
+.note h3 {
+  margin-bottom: 2em;
+}

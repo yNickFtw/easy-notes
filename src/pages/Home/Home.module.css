@@ -17,5 +17,14 @@
 }
 
 .text_section a:hover {
+  transform: scale(1.04);
   background-color: #80bd82;
+}
+
+input[type="search"] {
+  background: transparent;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: .5em;
+  color: #fff;
 }

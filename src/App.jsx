@@ -11,6 +11,10 @@ import { AuthProvider, useAuth } from "./contexts/UserContext";
 import { CreateNote } from "./pages/Notes/CreateNote";
 import { NoteById } from './pages/Notes/NoteById'
 import { SavedNotesPage } from "./pages/SavedNotes/SavedNotesPage";
+import { Profile } from "./pages/Profile/Profile";
+import { ProfileById } from "./pages/Profile/ProfileById";
+import { Search } from "./pages/Search/Search";
+import { SearchPage } from "./pages/Search/SearchPage";
 
 function App() {
   const { isLoggedIn } = useAuth();
@@ -32,6 +36,10 @@ function App() {
             element={isLoggedIn ? <CreateNote /> : <Login />}
           />
           <Route path="/note/:id" element={isLoggedIn ? <NoteById /> : <Login />} />
+          <Route path="/profile" element={isLoggedIn ? <Profile /> : <Login />} />
+          <Route path="/profile/:id" element={isLoggedIn ? <ProfileById /> : <Login />} />
+          <Route path="/notes/search" element={isLoggedIn ? <Search /> : <Login />} />
+          <Route path="/note/page/search" element={isLoggedIn ? <SearchPage /> : <Login />} />
         </Routes>
       </BrowserRouter>
     </>

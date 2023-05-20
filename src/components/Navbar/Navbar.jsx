@@ -6,6 +6,7 @@ import {
   IconBookmark,
   IconUser,
   IconLogout2,
+  IconSearch,
 } from "@tabler/icons-react";
 import { useAuth } from "../../contexts/UserContext";
 import { toast } from "react-toastify";
@@ -40,6 +41,16 @@ export const Navbar = () => {
         <li>
           <Link to="/notes/saves">
             <IconBookmark /> Salvos
+          </Link>
+        </li>
+        <li>
+          <Link to="/notes/search">
+            <IconSearch /> Procurar
+          </Link>
+        </li>
+        <li>
+          <Link to="/profile">
+            <IconUser /> Perfil
           </Link>
         </li>
         <li>
