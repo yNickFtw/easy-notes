@@ -5,3 +5,9 @@ body {
 .align-sidebar {
   padding-left: 300px;
 }
+
+@media screen and (max-width: 768px) {
+  .align-sidebar {
+    padding-left: 4em;
+  }
+}

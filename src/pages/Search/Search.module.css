@@ -38,7 +38,7 @@
 }
 
 .note {
-  margin: 1em auto;
+  margin: 1em;
   max-width: 500px;
   display: flex;
   flex-direction: column;
@@ -66,4 +66,19 @@
 .note h3 {
   margin-bottom: 2em;
   color: #ccc;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding-left: 4em;
+  }
+
+  .container h2 {
+    font-size: 1.3em;
+  }
+
+  .search_container {
+    flex-direction: column;
+  }
+
 }

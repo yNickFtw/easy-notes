@@ -28,3 +28,9 @@ input[type="search"] {
   padding: .5em;
   color: #fff;
 }
+
+@media screen and (max-width: 768px) {
+  .text_section h1 {
+    font-size: 1em;
+  }
+}

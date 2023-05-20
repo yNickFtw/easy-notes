@@ -84,6 +84,10 @@ export const SearchPage = () => {
             <div className={styles.note} key={note.id}>
               <h2>{note.title}</h2>
               <h3>{note.description}</h3>
+              <h4>
+                Por{" "}
+                <Link to={`/profile/${note.user.id}`}>{note.user.name}</Link>
+              </h4>
               <Link to={`/note/${note.id}`}>Ver mais</Link>
             </div>
           ))}

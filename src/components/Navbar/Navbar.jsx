@@ -25,6 +25,7 @@ export const Navbar = () => {
   };
 
   return (
+    <>
     <nav className={styles.nav}>
       <div className={styles.logo}>
         <Link to="/">
@@ -60,5 +61,35 @@ export const Navbar = () => {
         </li>
       </ul>
     </nav>
+    <nav className={styles.nav_mobile}>
+    <ul>
+        <li>
+          <Link to="/">
+            <IconHome />
+          </Link>
+        </li>
+        <li>
+          <Link to="/notes/saves">
+            <IconBookmark />
+          </Link>
+        </li>
+        <li>
+          <Link to="/notes/search">
+            <IconSearch />
+          </Link>
+        </li>
+        <li>
+          <Link to="/profile">
+            <IconUser />
+          </Link>
+        </li>
+        <li>
+          <button className={styles.button} onClick={handleLogout}>
+            <IconLogout2 />
+          </button>
+        </li>
+      </ul>
+    </nav>
+    </>
   );
 };

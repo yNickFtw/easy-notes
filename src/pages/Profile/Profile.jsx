@@ -39,7 +39,6 @@ export const Profile = () => {
       <Navbar />
       <div className={styles.container}>
         <h1>Perfil</h1>
-
         {loading ? (
           <p style={{ color: "#fff" }}>Carregando...</p>
         ) : (

@@ -149,3 +149,9 @@ button:hover {
   color: #ccc;
   font-weight: 100;
 }
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding-left: 4em;
+  }
+}
